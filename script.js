@@ -1,21 +1,26 @@
 const GRIDSIDE = 600;
-let rows = 100;
-let cols = 100;
+let squarePerSide = 16;
+
+
+const sketchArea = document.querySelector("#sketch-area");
+const sliderContainer = document.querySelector("#slider-container");
+const slider = document.querySelector("#slider");
+const sliderValue = document.querySelector("#slider-value");
+
+sliderValue.textContent = `${slider.value} x ${slider.value} (Resolution)`;
+
+sketchArea.style.width = sketchArea.style.heigth = `${GRIDSIDE}px`;
 
 function changeBackgroundColor(){
     this.style.backgroundColor = "black";
 }
 
-const sketchArea = document.querySelector("#sketch-area");
-
-sketchArea.style.width = `${GRIDSIDE}px`;
-sketchArea.style.heigth = `${GRIDSIDE}px`;
-
-function createGridCells(){
-    for (let i = 0;i<(rows * cols);i++){
+function createGridCells(squarePerSide){
+    const totalSquares = (squarePerSide*squarePerSide);
+    const heigthOrWidth =  `${(GRIDSIDE /squarePerSide) -2}px`
+    for (let i = 0;i<totalSquares;i++){
         const gridCell = document.createElement("div");
-        gridCell.style.width = `${(GRIDSIDE /cols) -2}px`;
-        gridCell.style.height = `${(GRIDSIDE /rows) -2}px`;
+        gridCell.style.width = gridCell.style.height = heigthOrWidth;
         gridCell.classList.add("cell")
 
         sketchArea.appendChild(gridCell);
@@ -24,7 +29,16 @@ function createGridCells(){
     } 
 }
 
-createGridCells();
+function removeGridCells(){
+    while(sketchArea.firstChild){
+        sketchArea.removeChild(sketchArea.firstChild);
+    }
+}
+
+
+
+
+createGridCells(squarePerSide);
 
 
 
